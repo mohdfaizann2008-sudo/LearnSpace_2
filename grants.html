@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research Grants — LearnSpace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background:
+        radial-gradient(ellipse at 50% 15%, rgba(201, 169, 110, 0.1), transparent 45%),
+        var(--bg-obsidian);
+      color: var(--text-main);
+    }
+
+    .grants-hero {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .grant-card {
+      height: 100%;
+      padding: clamp(1.5rem, 4vw, 2rem);
+      border: 1px solid var(--gold-hairline);
+      border-radius: 18px;
+      background: rgba(22, 24, 40, 0.7);
+    }
+
+    .grant-card-label {
+      display: inline-block;
+      margin-bottom: 1rem;
+      color: var(--gold-light);
+      font: 500 0.72rem var(--font-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .grant-note {
+      border-left: 3px solid var(--gold-primary);
+      border-radius: 0 12px 12px 0;
+      background: rgba(201, 169, 110, 0.07);
+      padding: 1rem 1.25rem;
+    }
+
+    .grant-actions .btn {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 575.98px) {
+      .grant-actions {
+        flex-direction: column;
+      }
+
+      .grant-actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle-input" aria-label="Toggle navigation menu">
+
+  <nav class="luxury-navbar fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="index.html" class="brand-logo">Learn<span>Space</span></a>
+      <div class="nav-links d-none d-lg-flex align-items-center gap-4">
+        <a href="index.html" class="nav-link-custom">Home</a>
+        <a href="curriculum.html" class="nav-link-custom">Curriculum</a>
+        <a href="roadmap.html" class="nav-link-custom">Roadmap</a>
+        <a href="ecosystem.html" class="nav-link-custom active">Ecosystem</a>
+        <a href="testimonials.html" class="nav-link-custom">Testimonials</a>
+      </div>
+      <div class="d-none d-lg-flex align-items-center gap-3">
+        <a href="login.html" class="btn btn-luxury-outline">Member Login</a>
+        <a href="Enroll.html" class="btn btn-luxury-glow">Enrol Now</a>
+      </div>
+      <label for="nav-toggle" class="mobile-hamburger d-lg-none" aria-hidden="true"><span></span><span></span><span></span></label>
+    </div>
+    <div class="mobile-drawer d-lg-none">
+      <div class="container mobile-drawer-content">
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="curriculum.html" class="mobile-link">Curriculum</a>
+        <a href="roadmap.html" class="mobile-link">Roadmap</a>
+        <a href="ecosystem.html" class="mobile-link">Ecosystem</a>
+        <a href="testimonials.html" class="mobile-link">Testimonials</a>
+        <hr class="border-gold-subtle my-2">
+        <a href="login.html" class="mobile-link">Member Login</a>
+        <a href="Enroll.html" class="btn btn-luxury-glow">Enrol Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="section-padding pt-200">
+    <div class="container">
+      <header class="grants-hero text-center mb-5">
+        <span class="section-subtitle font-mono">Research &amp; Development</span>
+        <h1 class="section-title">Explore LearnSpace Grants</h1>
+        <p class="section-desc">LearnSpace scholars may have access to research resources that support open-source tools and quantum computing projects.</p>
+      </header>
+
+      <section aria-label="Grant and research resources">
+        <div class="row g-3 g-lg-4">
+          <div class="col-md-4">
+            <article class="grant-card">
+              <span class="grant-card-label">Compute</span>
+              <h2 class="h4 font-serif text-white mb-3">Cloud GPU Grants</h2>
+              <p class="text-muted mb-0">Explore cloud GPU resources for development, experimentation, and research workloads.</p>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="grant-card">
+              <span class="grant-card-label">Equipment</span>
+              <h2 class="h4 font-serif text-white mb-3">Specialized Hardware</h2>
+              <p class="text-muted mb-0">Learn about access to specialized hardware clusters for eligible learning and research projects.</p>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="grant-card">
+              <span class="grant-card-label">Incubation</span>
+              <h2 class="h4 font-serif text-white mb-3">Seed Funding Pools</h2>
+              <p class="text-muted mb-0">Discover potential support for incubating open-source developer tools and quantum algorithms.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <aside class="grant-note text-muted small mt-4" aria-label="Grant availability notice">
+        <strong class="text-gold d-block mb-1">Please note</strong>
+        Grant and equipment access is subject to eligibility, review, and availability. Specific amounts, deadlines, and selection criteria are not listed here; confirm current details with LearnSpace before making plans.
+      </aside>
+
+      <div class="grant-actions d-flex justify-content-center gap-3 mt-4">
+        <a href="Enroll.html" class="btn btn-luxury-glow px-4">Start Your LearnSpace Application</a>
+        <a href="ecosystem.html" class="btn btn-luxury-outline px-4">Back to Ecosystem</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="luxury-footer pt-4 pb-4 mt-5">
+    <div class="container text-center text-muted small border-top border-gold-subtle pt-4 font-mono">
+      &copy; 2026 LearnSpace Technologies Inc. All rights reserved.
+    </div>
+  </footer>
+</body>
+</html>

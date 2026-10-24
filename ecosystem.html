@@ -155,6 +155,8 @@
   </style>
 </head>
 <body>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle-input" aria-label="Toggle navigation menu">
+
   <!-- Luxury Navigation Bar -->
   <nav class="luxury-navbar fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
@@ -168,7 +170,20 @@
       </div>
       <div class="d-none d-lg-flex align-items-center gap-3">
         <a href="login.html" class="btn btn-luxury-outline">Member Login</a>
-        <a href="enrol.html" class="btn btn-luxury-glow">Enrol Now</a>
+        <a href="Enroll.html" class="btn btn-luxury-glow">Enrol Now</a>
+      </div>
+      <label for="nav-toggle" class="mobile-hamburger d-lg-none" aria-hidden="true"><span></span><span></span><span></span></label>
+    </div>
+    <div class="mobile-drawer d-lg-none">
+      <div class="container mobile-drawer-content">
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="curriculum.html" class="mobile-link">Curriculum</a>
+        <a href="roadmap.html" class="mobile-link">Roadmap</a>
+        <a href="ecosystem.html" class="mobile-link">Ecosystem</a>
+        <a href="testimonials.html" class="mobile-link">Testimonials</a>
+        <hr class="border-gold-subtle my-2">
+        <a href="login.html" class="mobile-link">Member Login</a>
+        <a href="Enroll.html" class="btn btn-luxury-glow">Enrol Now</a>
       </div>
     </div>
   </nav>
@@ -243,7 +258,7 @@
               <p class="text-muted mb-0">LearnSpace scholars receive direct access to cloud GPU grants, specialized hardware clusters, and seed funding pools to incubate open-source developer tools and quantum algorithms.</p>
             </div>
             <div class="col-lg-4 text-lg-end">
-              <a href="enrol.html" class="btn btn-luxury-glow">Explore Grants →</a>
+              <a href="grants.html" class="btn btn-luxury-glow">Explore Grants <span aria-hidden="true">→</span></a>
             </div>
           </div>
         </div>

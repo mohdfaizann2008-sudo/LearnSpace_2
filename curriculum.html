@@ -252,6 +252,7 @@
 <body>
   <!-- Hidden checkbox controller for Enrolment Modal -->
   <input type="checkbox" id="enroll-modal-toggle">
+  <input type="checkbox" id="nav-toggle" class="nav-toggle-input" aria-label="Toggle navigation menu">
 
   <!-- Luxury Navigation Bar -->
   <nav class="luxury-navbar fixed-top">
@@ -267,6 +268,19 @@
       <div class="d-none d-lg-flex align-items-center gap-3">
         <a href="login.html" class="btn btn-luxury-outline">Member Login</a>
         <label for="enroll-modal-toggle" class="btn btn-luxury-glow mb-0">Enrol Now</label>
+      </div>
+      <label for="nav-toggle" class="mobile-hamburger d-lg-none" aria-hidden="true"><span></span><span></span><span></span></label>
+    </div>
+    <div class="mobile-drawer d-lg-none">
+      <div class="container mobile-drawer-content">
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="curriculum.html" class="mobile-link">Curriculum</a>
+        <a href="roadmap.html" class="mobile-link">Roadmap</a>
+        <a href="ecosystem.html" class="mobile-link">Ecosystem</a>
+        <a href="testimonials.html" class="mobile-link">Testimonials</a>
+        <hr class="border-gold-subtle my-2">
+        <a href="login.html" class="mobile-link">Member Login</a>
+        <label for="enroll-modal-toggle" class="btn btn-luxury-glow w-100 mb-0">Enrol Now</label>
       </div>
     </div>
   </nav>

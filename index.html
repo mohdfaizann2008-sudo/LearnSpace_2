@@ -133,7 +133,7 @@
 <body>
   <!-- Hidden checkbox controller for Enrolment Modal -->
   <input type="checkbox" id="enroll-modal-toggle">
-  <input type="checkbox" id="nav-toggle" class="nav-toggle-input d-none">
+  <input type="checkbox" id="nav-toggle" class="nav-toggle-input" aria-label="Toggle navigation menu">
 
   <!-- Luxury Navigation Bar -->
   <nav class="luxury-navbar fixed-top">
@@ -150,10 +150,10 @@
         <a href="login.html" class="btn btn-luxury-outline">Member Login</a>
         <label for="enroll-modal-toggle" class="btn btn-luxury-glow mb-0">Enrol Now</label>
       </div>
-      <label for="nav-toggle" class="mobile-hamburger d-lg-none"><span></span><span></span><span></span></label>
+      <label for="nav-toggle" class="mobile-hamburger d-lg-none" aria-hidden="true"><span></span><span></span><span></span></label>
     </div>
     <div class="mobile-drawer d-lg-none">
-      <div class="container d-flex flex-column gap-3 py-4">
+      <div class="container mobile-drawer-content">
         <a href="index.html" class="mobile-link">Home</a>
         <a href="curriculum.html" class="mobile-link">Curriculum</a>
         <a href="roadmap.html" class="mobile-link">Roadmap</a>
@@ -161,7 +161,7 @@
         <a href="testimonials.html" class="mobile-link">Testimonials</a>
         <hr class="border-gold-subtle my-2">
         <a href="login.html" class="mobile-link">Member Login</a>
-        <label for="enroll-modal-toggle" class="btn btn-luxury-glow w-100 text-center py-2 mb-0">Enrol Now</label>
+        <label for="enroll-modal-toggle" class="btn btn-luxury-glow w-100 mb-0">Enrol Now</label>
       </div>
     </div>
   </nav>
@@ -212,6 +212,35 @@
           <div class="scene-3d-wrapper">
             <div class="orbital-ring ring-1"></div>
             <div class="orbital-ring ring-2"></div>
+            <div class="transformer-model" role="img" aria-label="Animated three-dimensional transformer architecture showing input embeddings, self-attention, feed-forward processing, and output tokens">
+              <div class="transformer-model-heading font-mono">NEURAL PROCESSING // 04</div>
+              <div class="transformer-token-stream">
+                <span>0.82</span><span>0.41</span><span>0.96</span><span>0.28</span>
+              </div>
+              <div class="transformer-flow-arrow" aria-hidden="true"></div>
+              <div class="transformer-layer transformer-attention">
+                <span class="transformer-layer-index font-mono">01</span>
+                <span class="transformer-layer-copy">
+                  <strong>SELF-ATTENTION</strong>
+                  <small>QUERY · KEY · VALUE</small>
+                </span>
+                <span class="transformer-attention-core" aria-hidden="true"></span>
+              </div>
+              <div class="transformer-residual font-mono">RESIDUAL + NORM</div>
+              <div class="transformer-layer transformer-feedforward">
+                <span class="transformer-layer-index font-mono">02</span>
+                <span class="transformer-layer-copy">
+                  <strong>FEED-FORWARD</strong>
+                  <small>NON-LINEAR PROJECTION</small>
+                </span>
+                <span class="transformer-feedforward-core" aria-hidden="true"></span>
+              </div>
+              <div class="transformer-flow-arrow" aria-hidden="true"></div>
+              <div class="transformer-token-stream transformer-output-stream">
+                <span>0.13</span><span>0.91</span><span>0.67</span><span>0.35</span>
+              </div>
+              <div class="transformer-model-status font-mono"><span></span> ATTENTION MAP ACTIVE</div>
+            </div>
             <div class="floating-glass-cube">
               <div class="cube-face front"></div>
               <div class="cube-face back"></div>

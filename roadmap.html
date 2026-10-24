@@ -195,9 +195,80 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
+
+    .roadmap-cta {
+      padding: clamp(1.5rem, 5vw, 3.5rem);
+      border: 1px solid var(--border-gold);
+      border-radius: 24px;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.12), transparent 65%),
+        linear-gradient(145deg, rgba(18, 18, 24, 0.96), rgba(10, 10, 12, 0.98));
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .roadmap-cta-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.75rem;
+      border: 1px solid var(--border-gold);
+      border-radius: 999px;
+      color: var(--gold-primary);
+      background: rgba(212, 175, 55, 0.08);
+      font: 500 0.7rem 'JetBrains Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .roadmap-cta-eyebrow::before {
+      content: "";
+      width: 0.45rem;
+      height: 0.45rem;
+      border-radius: 50%;
+      background: var(--gold-primary);
+      box-shadow: 0 0 10px var(--gold-primary);
+    }
+
+    .roadmap-cta-stat {
+      height: 100%;
+      padding: 1rem;
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .roadmap-cta-stat strong {
+      display: block;
+      color: #fff;
+      font: 700 1.15rem 'Cinzel', serif;
+    }
+
+    .roadmap-cta-stat span {
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 0.75rem;
+    }
+
+    .roadmap-cta-actions .btn {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 575.98px) {
+      .roadmap-cta-actions {
+        flex-direction: column;
+      }
+
+      .roadmap-cta-actions .btn {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle-input" aria-label="Toggle navigation menu">
+
   <!-- Navigation Bar -->
   <nav class="luxury-navbar fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
@@ -211,7 +282,20 @@
       </div>
       <div class="d-none d-lg-flex align-items-center gap-3">
         <a href="login.html" class="btn btn-luxury-outline">Member Login</a>
-        <a href="enrol.html" class="btn btn-luxury-glow">Enrol Now</a>
+        <a href="Enroll.html" class="btn btn-luxury-glow">Enrol Now</a>
+      </div>
+      <label for="nav-toggle" class="mobile-hamburger d-lg-none" aria-hidden="true"><span></span><span></span><span></span></label>
+    </div>
+    <div class="mobile-drawer d-lg-none">
+      <div class="container mobile-drawer-content">
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="curriculum.html" class="mobile-link">Curriculum</a>
+        <a href="roadmap.html" class="mobile-link">Roadmap</a>
+        <a href="ecosystem.html" class="mobile-link">Ecosystem</a>
+        <a href="testimonials.html" class="mobile-link">Testimonials</a>
+        <hr class="border-gold-subtle my-2">
+        <a href="login.html" class="mobile-link">Member Login</a>
+        <a href="Enroll.html" class="btn btn-luxury-glow">Enrol Now</a>
       </div>
     </div>
   </nav>
@@ -470,10 +554,36 @@
 
       <!-- Call to Action Banner -->
       <div class="text-center mt-5 pt-4">
-        <div class="p-5 border border-gold-subtle rounded-4 bg-surface-dark position-relative overflow-hidden">
+        <div class="roadmap-cta position-relative overflow-hidden">
+          <span class="roadmap-cta-eyebrow mb-3">Cohort admissions</span>
           <h3 class="text-white font-serif h3 mb-3">Ready to Begin Your Journey?</h3>
-          <p class="text-muted max-w-700 mx-auto small mb-4">Admissions are processed on a rolling basis for our next executive cohort.</p>
-          <a href="enrol.html" class="btn btn-luxury-glow px-4 py-3">Secure Your Candidacy →</a>
+          <p class="text-muted max-w-700 mx-auto small mb-4">Admissions are processed on a rolling basis for our next executive cohort. Submit your academic profile for syndicate review.</p>
+
+          <div class="row g-2 g-sm-3 justify-content-center mb-4">
+            <div class="col-6 col-md-3">
+              <div class="roadmap-cta-stat">
+                <strong>06</strong>
+                <span>Learning phases</span>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="roadmap-cta-stat">
+                <strong>28 weeks</strong>
+                <span>Guided roadmap</span>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="roadmap-cta-stat">
+                <strong>01</strong>
+                <span>Executive capstone</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="roadmap-cta-actions d-flex justify-content-center gap-3">
+            <a href="Enroll.html" class="btn btn-luxury-glow px-4">Secure Your Candidacy <span aria-hidden="true">→</span></a>
+            <a href="curriculum.html" class="btn btn-luxury-outline px-4">Explore Curriculum</a>
+          </div>
         </div>
       </div>
 
