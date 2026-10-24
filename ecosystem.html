@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecosystem — LearnSpace 3D Learning Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    :root {
+      --gold-primary: #d4af37;
+      --gold-glow: rgba(212, 175, 55, 0.4);
+      --bg-dark: #0a0a0c;
+      --surface-card: rgba(18, 18, 24, 0.85);
+      --border-gold: rgba(212, 175, 55, 0.25);
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: #e0e0e0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .font-serif {
+      font-family: 'Cinzel', serif;
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .x-small {
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+    }
+
+    /* Pure CSS Bento Grid Layout */
+    .bento-grid-container {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .bento-tile {
+      background: var(--surface-card);
+      border: 1px solid var(--border-gold);
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-height: 320px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .bento-tile:hover {
+      border-color: rgba(212, 175, 55, 0.8);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2), 0 0 25px rgba(212, 175, 55, 0.1);
+    }
+
+    /* Bento Grid Spans */
+    .tile-large {
+      grid-column: span 7;
+    }
+
+    .tile-small {
+      grid-column: span 5;
+    }
+
+    .tile-medium-left {
+      grid-column: span 5;
+    }
+
+    .tile-medium-right {
+      grid-column: span 7;
+    }
+
+    .tile-full {
+      grid-column: span 12;
+    }
+
+    @media (max-width: 992px) {
+      .tile-large, .tile-small, .tile-medium-left, .tile-medium-right, .tile-full {
+        grid-column: span 12;
+      }
+    }
+
+    /* Background image & overlays */
+    .bento-bg-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .bento-bg-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .bento-tile:hover .bento-bg-image img {
+      transform: scale(1.1);
+    }
+
+    .bento-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10, 10, 12, 0.2) 0%, rgba(18, 18, 24, 0.95) 85%);
+      z-index: 2;
+    }
+
+    .tile-content {
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Badges & Pills */
+    .badge-tag {
+      font-size: 0.7rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      color: var(--gold-primary);
+      letter-spacing: 0.5px;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+    }
+
+    .metric-number {
+      font-size: 3rem;
+      font-weight: 700;
+      font-family: 'Cinzel', serif;
+      color: #ffffff;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #ffffff 30%, var(--gold-primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body>
+  <!-- Luxury Navigation Bar -->
+  <nav class="luxury-navbar fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="index.html" class="brand-logo">Learn<span>Space</span></a>
+      <div class="nav-links d-none d-lg-flex align-items-center gap-4">
+        <a href="index.html" class="nav-link-custom">Home</a>
+        <a href="curriculum.html" class="nav-link-custom">Curriculum</a>
+        <a href="roadmap.html" class="nav-link-custom">Roadmap</a>
+        <a href="ecosystem.html" class="nav-link-custom active">Ecosystem</a>
+        <a href="testimonials.html" class="nav-link-custom">Testimonials</a>
+      </div>
+      <div class="d-none d-lg-flex align-items-center gap-3">
+        <a href="login.html" class="btn btn-luxury-outline">Member Login</a>
+        <a href="enrol.html" class="btn btn-luxury-glow">Enrol Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Ecosystem Section -->
+  <main class="section-padding pt-200 pb-5">
+    <div class="container">
+      <div class="text-center mx-auto mb-5 max-w-700">
+        <span class="section-subtitle font-mono">Holistic Architecture</span>
+        <h2 class="section-title">The LearnSpace Bento Ecosystem</h2>
+        <p class="section-desc">An asymmetric, art-directed architectural layout uniting all pillars of our advanced technical ecosystem, live telemetry infrastructure, and global academic syndicates.</p>
+      </div>
+
+      <!-- Bento Grid Container (Pure CSS Grid) -->
+      <div class="bento-grid-container">
+        
+        <!-- Tile 1: Featured Track (Large Left) -->
+        <div class="bento-tile tile-large">
+          <div class="bento-bg-image">
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2560&auto=format&fit=crop" alt="Cloud Architect">
+            <div class="bento-overlay"></div>
+          </div>
+          <div class="tile-content">
+            <span class="badge-tag mb-3 d-inline-block">Featured Track</span>
+            <h3 class="text-white h3 font-serif mb-2">Full-Stack Cloud Architect & Microservices</h3>
+            <p class="text-muted small mb-0">A rigorous 6-month immersive track combining high-concurrency frontend engineering, distributed Kubernetes clusters, and zero-latency caching pipelines.</p>
+          </div>
+        </div>
+
+        <!-- Tile 2: Global Syndicate Stats (Small Right) -->
+        <div class="bento-tile tile-small bg-gradient-dark">
+          <div class="tile-content">
+            <span class="badge-tag mb-3 d-inline-block font-mono">Global Reach</span>
+            <div class="metric-number">98.4%</div>
+            <h4 class="text-white h5 font-serif mb-2">Syndicate Placement Rate</h4>
+            <p class="text-muted small mb-0">Graduates secure senior engineering roles across Fortune 500 tech monoliths and Tier-1 AI research laboratories within 90 days.</p>
+          </div>
+        </div>
+
+        <!-- Tile 3: Ultra-HD 3D Virtual Labs (Medium Left) -->
+        <div class="bento-tile tile-medium-left">
+          <div class="bento-bg-image">
+            <img src="https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?q=80&w=2560&auto=format&fit=crop" alt="Virtual Labs">
+            <div class="bento-overlay"></div>
+          </div>
+          <div class="tile-content">
+            <span class="badge-tag mb-3 d-inline-block">Immersive Simulation</span>
+            <h3 class="text-white h4 font-serif mb-2">Ultra-HD 3D Virtual Labs</h3>
+            <p class="text-muted small mb-0">Experience volumetric coding environments powered by WebGPU and real-time multiplayer telemetry visualization.</p>
+          </div>
+        </div>
+
+        <!-- Tile 4: Autonomous Neural Mentors (Medium Right) -->
+        <div class="bento-tile tile-medium-right">
+          <div class="bento-bg-image">
+            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2560&auto=format&fit=crop" alt="Neural AI Mentors">
+            <div class="bento-overlay"></div>
+          </div>
+          <div class="tile-content">
+            <span class="badge-tag mb-3 d-inline-block">Artificial Intelligence</span>
+            <h3 class="text-white h4 font-serif mb-2">Autonomous Neural Mentorship Core</h3>
+            <p class="text-muted small mb-0">Custom fine-tuned LLM co-pilots integrated directly into your IDE to conduct code reviews, pinpoint logic bottlenecks, and simulate technical interview grilling 24/7.</p>
+          </div>
+        </div>
+
+        <!-- Tile 5: Enterprise Research Grants (Full Width) -->
+        <div class="bento-tile tile-full bg-surface-dark">
+          <div class="row align-items-center">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+              <span class="badge-tag mb-3 d-inline-block">Syndicate Funding</span>
+              <h3 class="text-white h3 font-serif mb-2">Open-Source & Quantum Research Grants</h3>
+              <p class="text-muted mb-0">LearnSpace scholars receive direct access to cloud GPU grants, specialized hardware clusters, and seed funding pools to incubate open-source developer tools and quantum algorithms.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+              <a href="enrol.html" class="btn btn-luxury-glow">Explore Grants →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="luxury-footer pt-5 pb-4 mt-5">
+    <div class="container text-center text-muted small border-top border-gold-subtle pt-4 font-mono">
+      &copy; 2026 LearnSpace Technologies Inc. All rights reserved.
+    </div>
+  </footer>
+</body>
+</html>

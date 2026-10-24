@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curriculum — LearnSpace 3D Learning Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    :root {
+      --gold-primary: #d4af37;
+      --gold-glow: rgba(212, 175, 55, 0.4);
+      --bg-dark: #0a0a0c;
+      --surface-card: rgba(20, 20, 28, 0.75);
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: #e0e0e0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Modal Controller Styles */
+    #enroll-modal-toggle {
+      display: none;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(10, 10, 12, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    #enroll-modal-toggle:checked ~ .modal-overlay {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .enroll-modal-box {
+      max-width: 540px;
+      width: 100%;
+      position: relative;
+      background: rgba(18, 18, 24, 0.95);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 0 60px rgba(212, 175, 55, 0.25);
+      transform: translateY(30px) scale(0.92);
+      transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    #enroll-modal-toggle:checked ~ .modal-overlay .enroll-modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    .css-modal-close-btn {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .css-modal-close-btn:hover {
+      color: var(--gold-primary);
+    }
+
+    .font-serif {
+      font-family: 'Cinzel', serif;
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .x-small {
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+    }
+
+    /* 3D Animations & Dynamic Card Styling */
+    .perspective-container {
+      perspective: 1200px;
+    }
+
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0) rotateX(0deg); }
+      50% { transform: translateY(-8px) rotateX(1.2deg); }
+    }
+
+    @keyframes hologramScan {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(1000%); }
+    }
+
+    .animated-3d-card {
+      background: var(--surface-card);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 20px;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      transform-style: preserve-3d;
+      transition: transform 0.25s ease-out, border-color 0.4s ease, box-shadow 0.4s ease;
+      animation: floatCard 8s ease-in-out infinite;
+      position: relative;
+    }
+
+    .animated-3d-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+      opacity: 0.6;
+      z-index: 5;
+    }
+
+    .animated-3d-card:nth-child(2n) { animation-delay: 1.5s; }
+    .animated-3d-card:nth-child(3n) { animation-delay: 3s; }
+
+    .animated-3d-card:hover {
+      border-color: rgba(212, 175, 55, 0.8);
+      box-shadow: 0 20px 45px rgba(212, 175, 55, 0.25), 0 0 25px rgba(212, 175, 55, 0.15);
+    }
+
+    .card-img-overlay-wrap {
+      position: relative;
+      height: 230px;
+      overflow: hidden;
+    }
+
+    .luxury-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .animated-3d-card:hover .luxury-card-img {
+      transform: scale(1.12);
+    }
+
+    /* Holographic Scanline Visual Effect */
+    .hologram-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 15px;
+      background: linear-gradient(180deg, rgba(212, 175, 55, 0) 0%, rgba(212, 175, 55, 0.3) 50%, rgba(212, 175, 55, 0) 100%);
+      pointer-events: none;
+      z-index: 4;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .animated-3d-card:hover .hologram-line {
+      opacity: 1;
+      animation: hologramScan 2.5s linear infinite;
+    }
+
+    .img-gradient-mask {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10, 10, 12, 0.1) 0%, rgba(20, 20, 28, 0.95) 100%);
+    }
+
+    .tech-pill {
+      font-size: 0.7rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      color: var(--gold-primary);
+      letter-spacing: 0.5px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .curriculum-filter-btn {
+      background: rgba(20, 20, 28, 0.7);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      color: rgba(255, 255, 255, 0.75);
+      padding: 0.6rem 1.4rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .curriculum-filter-btn:hover,
+    .curriculum-filter-btn.active {
+      background: rgba(212, 175, 55, 0.18);
+      border-color: var(--gold-primary);
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.35);
+    }
+
+    /* Expanded Details Drawer */
+    .module-list {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 0;
+    }
+
+    .module-list li {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.65);
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .module-list li::before {
+      content: "◈";
+      position: absolute;
+      left: 0;
+      color: var(--gold-primary);
+      font-size: 0.75rem;
+    }
+
+    .track-card-wrapper {
+      transition: all 0.4s ease;
+    }
+
+    .track-card-wrapper.hidden-card {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Hidden checkbox controller for Enrolment Modal -->
+  <input type="checkbox" id="enroll-modal-toggle">
+
+  <!-- Luxury Navigation Bar -->
+  <nav class="luxury-navbar fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="index.html" class="brand-logo">Learn<span>Space</span></a>
+      <div class="nav-links d-none d-lg-flex align-items-center gap-4">
+        <a href="index.html" class="nav-link-custom">Home</a>
+        <a href="curriculum.html" class="nav-link-custom active">Curriculum</a>
+        <a href="roadmap.html" class="nav-link-custom">Roadmap</a>
+        <a href="ecosystem.html" class="nav-link-custom">Ecosystem</a>
+        <a href="testimonials.html" class="nav-link-custom">Testimonials</a>
+      </div>
+      <div class="d-none d-lg-flex align-items-center gap-3">
+        <a href="login.html" class="btn btn-luxury-outline">Member Login</a>
+        <label for="enroll-modal-toggle" class="btn btn-luxury-glow mb-0">Enrol Now</label>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Curriculum Section -->
+  <main class="section-padding pt-200">
+    <div class="container perspective-container">
+      <div class="text-center mx-auto mb-5 max-w-700">
+        <span class="section-subtitle">Curated Excellence</span>
+        <h2 class="section-title">Master Executive Disciplines</h2>
+        <p class="section-desc">Explore eight bespoke technical programs engineered with Ultra-HD 3D interactive frameworks, live telemetry, dynamic GPU acceleration, and direct executive mentorship.</p>
+        
+        <!-- Discipline Filter Pills -->
+        <div class="d-flex flex-wrap justify-content-center gap-2 mt-4" id="filter-container">
+          <button class="curriculum-filter-btn active" data-filter="all">All Disciplines</button>
+          <button class="curriculum-filter-btn" data-filter="engineering">Engineering</button>
+          <button class="curriculum-filter-btn" data-filter="ai">Neural AI</button>
+          <button class="curriculum-filter-btn" data-filter="spatial">Spatial & XR</button>
+          <button class="curriculum-filter-btn" data-filter="cyber">Cyber & Cloud</button>
+          <button class="curriculum-filter-btn" data-filter="quantum">Quantum & Systems</button>
+        </div>
+      </div>
+
+      <!-- Curriculum Grid -->
+      <div class="row g-4" id="curriculum-grid">
+        
+        <!-- Track 1: Full Stack -->
+        <div class="col-md-6 col-lg-4 track-card-wrapper" data-category="engineering">
+          <div class="animated-3d-card h-100 d-flex flex-column justify-content-between">
+            <div class="hologram-line"></div>
+            <div>
+              <div class="card-img-overlay-wrap">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2560&auto=format&fit=crop" alt="Full Stack Web Development" class="luxury-card-img">
+                <div class="img-gradient-mask"></div>
+                <span class="position-absolute top-0 end-0 m-3 badge bg-dark border border-gold-subtle text-gold font-mono">TRACK 01</span>
+              </div>
+              <div class="p-4">
+                <div class="d-flex gap-2 mb-3 flex-wrap">
+                  <span class="tech-pill">React 19</span>
+                  <span class="tech-pill">Node.js</span>
+                  <span class="tech-pill">GraphQL</span>
+                  <span class="tech-pill">Distributed Caching</span>
+                </div>
+                <h3 class="h4 text-white font-serif mb-2">Full Stack Web Engineering</h3>
+                <p class="text-muted small mb-3">Master high-concurrency microservices, state orchestration, serverless cloud computing, and real-time WebSockets.</p>
+                
+                <!-- Detailed Curriculum Preview -->
+                <ul class="module-list mb-3">
+                  <li>Enterprise Microservice Architecture</li>
+                  <li>Distributed Databases & Redis Clustering</li>
+                  <li>Real-time Engine & WebRTC Pipelines</li>
+                </ul>
+              </div>
+            </div>
+            <div class="p-4 pt-0 d-flex justify-content-between align-items-center border-top border-gold-subtle mt-auto">
+              <span class="x-small text-muted font-mono">16 WEEKS • 40 MODULES</span>
+              <label for="enroll-modal-toggle" class="card-link-arrow border-0 bg-transparent text-gold cursor-pointer p-0 fw-bold">Enrol Track →</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 2: Neural AI -->
+        <div class="col-md-6 col-lg-4 track-card-wrapper" data-category="ai">
+          <div class="animated-3d-card h-100 d-flex flex-column justify-content-between">
+            <div class="hologram-line"></div>
+            <div>
+              <div class="card-img-overlay-wrap">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2560&auto=format&fit=crop" alt="Artificial Intelligence" class="luxury-card-img">
+                <div class="img-gradient-mask"></div>
+                <span class="position-absolute top-0 end-0 m-3 badge bg-dark border border-gold-subtle text-gold font-mono">TRACK 02</span>
+              </div>
+              <div class="p-4">
+                <div class="d-flex gap-2 mb-3 flex-wrap">
+                  <span class="tech-pill">PyTorch</span>
+                  <span class="tech-pill">LLMs</span>
+                  <span class="tech-pill">Vector DBs</span>
+                  <span class="tech-pill">CUDA</span>
+                </div>
+                <h3 class="h4 text-white font-serif mb-2">Artificial Intelligence & Neural Core</h3>
+                <p class="text-muted small mb-3">Construct autonomous LLM agents, optimize tensor pipelines, fine-tune open models, and deploy custom vector stores.</p>
+                
+                <ul class="module-list mb-3">
+                  <li>Transformer Architectures & Attention Mechanisms</li>
+                  <li>RAG Systems & High-Dimensional Vectors</li>
+                  <li>Autonomous Multi-Agent Orchestration</li>
+                </ul>
+              </div>
+            </div>
+            <div class="p-4 pt-0 d-flex justify-content-between align-items-center border-top border-gold-subtle mt-auto">
+              <span class="x-small text-muted font-mono">20 WEEKS • 52 MODULES</span>
+              <label for="enroll-modal-toggle" class="card-link-arrow border-0 bg-transparent text-gold cursor-pointer p-0 fw-bold">Enrol Track →</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 3: UI/UX Spatial Design -->
+        <div class="col-md-6 col-lg-4 track-card-wrapper" data-category="spatial">
+          <div class="animated-3d-card h-100 d-flex flex-column justify-content-between">
+            <div class="hologram-line"></div>
+            <div>
+              <div class="card-img-overlay-wrap">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2560&auto=format&fit=crop" alt="UI/UX Spatial Design" class="luxury-card-img">
+                <div class="img-gradient-mask"></div>
+                <span class="position-absolute top-0 end-0 m-3 badge bg-dark border border-gold-subtle text-gold font-mono">TRACK 03</span>
+              </div>
+              <div class="p-4">
+                <div class="d-flex gap-2 mb-3 flex-wrap">
+                  <span class="tech-pill">Figma Pro</span>
+                  <span class="tech-pill">Spatial UI</span>
+                  <span class="tech-pill">Design Systems</span>
+                  <span class="tech-pill">Spline 3D</span>
+                </div>
+                <h3 class="h4 text-white font-serif mb-2">UI/UX & Spatial Systems</h3>
+                <p class="text-muted small mb-3">Architect enterprise design tokens, volumetric spatial interactions, glassmorphic UI, and behavioral telemetry analytics.</p>
+                
+                <ul class="module-list mb-3">
+                  <li>Volumetric UI & Depth System Design</li>
+                  <li>Design Tokens & Scalable Design Systems</li>
+                  <li>Eye-Tracking & Spatial Micro-Interactions</li>
+                </ul>
+              </div>
+            </div>
+            <div class="p-4 pt-0 d-flex justify-content-between align-items-center border-top border-gold-subtle mt-auto">
+              <span class="x-small text-muted font-mono">14 WEEKS • 36 MODULES</span>
+              <label for="enroll-modal-toggle" class="card-link-arrow border-0 bg-transparent text-gold cursor-pointer p-0 fw-bold">Enrol Track →</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 4: Spatial Computing & WebXR -->
+        <div class="col-md-6 col-lg-4 track-card-wrapper" data-category="spatial">
+          <div class="animated-3d-card h-100 d-flex flex-column justify-content-between">
+            <div class="hologram-line"></div>
+            <div>
+              <div class="card-img-overlay-wrap">
+                <img src="https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?q=80&w=2560&auto=format&fit=crop" alt="Spatial Computing" class="luxury-card-img">
+                <div class="img-gradient-mask"></div>
+                <span class="position-absolute top-0 end-0 m-3 badge bg-dark border border-gold-subtle text-gold font-mono">TRACK 04</span>
+              </div>
+              <div class="p-4">
+                <div class="d-flex gap-2 mb-3 flex-wrap">
+                  <span class="tech-pill">Three.js</span>
+                  <span class="tech-pill">WebXR</span>
+                  <span class="tech-pill">GLSL Shaders</span>
+                  <span class="tech-pill">WebGPU</span>
+                </div>
+                <h3 class="h4 text-white font-serif mb-2">Spatial Computing & WebXR</h3>
+                <p class="text-muted small mb-3">Engineered for immersive 3D web environments, custom GPU fragment shaders, and spatial audio integrations.</p>
+                
+                <ul class="module-list mb-3">
+                  <li>WebGPU Pipeline & Shaders Optimization</li>
+                  <li>Immersive Spatial Audio Simulation</li>
+                  <li>Hand Tracking & Haptic Feedback Mechanics</li>
+                </ul>
+              </div>
+            </div>
+            <div class="p-4 pt-0 d-flex justify-content-between align-items-center border-top border-gold-subtle mt-auto">
+              <span class="x-small text-muted font-mono">18 WEEKS • 44 MODULES</span>
+              <label for="enroll-modal-toggle" class="card-link-arrow border-0 bg-transparent text-gold cursor-pointer p-0 fw-bold">Enrol Track →</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 5: Predictive Telemetry & Data -->
+        <div class="col-md-6 col-lg-4 track-card-wrapper" data-category="engineering">
+          <div class="animated-3d-card h-100 d-flex flex-column justify-content-between">
+            <div class="hologram-line"></div>
+            <div>
+              <div class="card-img-overlay-wrap">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2560&auto=format&fit=crop" alt="Data Science" class="luxury-card-img">
+                <div class="img-gradient-mask"></div>
+                <span class="position-absolute top-0 end-0 m-3 badge bg-dark border border-gold-subtle text-gold font-mono">TRACK 05</span>
+              </div>
+              <div class="p-4">
+                <div class="d-flex gap-2 mb-3 flex-wrap">
+                  <span class="tech-pill">Python</span>
+                  <span class="tech-pill">Apache Spark</span>
+                  <span class="tech-pill">Snowflake</span>
+                  <span class="tech-pill">Kafka</span>
+                </div>
+                <h3 class="h4 text-white font-serif mb-2">Predictive Telemetry & Data</h3>
+                <p class="text-muted small mb-3">Build big data ingestion pipelines, statistical modeling, real-time analytics streaming, and financial risk modeling.</p>
+                
+                <ul class="module-list mb-3">
+                  <li>Real-time Event Streaming with Kafka</li>
+                  <li>Petabyte-Scale Data Warehousing</li>
+                  <li>Predictive Financial Telemetry Models</li>
+                </ul>
+              </div>
+            </div>
+            <div class="p-4 pt-0 d-flex justify-content-between align-items-center border-top border-gold-subtle mt-auto">
+              <span class="x-small text-muted font-mono">16 WEEKS • 40 MODULES</span>
+              <label for="enroll-modal-toggle" class="card-link-arrow border-0 bg-transparent text-gold cursor-pointer p-0 fw-bold">Enrol Track →</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 6: Cybersecurity & Cryptography -->
+        <div class="col-md-6 col-lg-4 track-card-wrapper" data-category="cyber">
+          <div class="animated-3d-card h-100 d-flex flex-column justify-content-between">
+            <div class="hologram-line"></div>
+            <div>
+              <div class="card-img-overlay-wrap">
+                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2560&auto=format&fit=crop" alt="Cybersecurity" class="luxury-card-img">
+                <div class="img-gradient-mask"></div>
+                <span class="position-absolute top-0 end-0 m-3 badge bg-dark border border-gold-subtle text-gold font-mono">TRACK 06</span>
+              </div>
+              <div class="p-4">
+                <div class="d-flex gap-2 mb-3 flex-wrap">
+                  <span class="tech-pill">Zero Trust</span>
+                  <span class="tech-pill">Rust</span>
+                  <span class="tech-pill">Post-Quantum</span>
+                  <span class="tech-pill">eBPF</span>
+                </div>
+                <h3 class="h4 text-white font-serif mb-2">Cybersecurity & Cryptography</h3>
+                <p class="text-muted small mb-3">Protect enterprise assets with zero-trust architectures, ethical penetration testing, and post-quantum encryption protocols.</p>
+                
+                <ul class="module-list mb-3">
+                  <li>Post-Quantum Lattice Cryptography</li>
+                  <li>Zero-Trust Network Mesh Engineering</li>
+                  <li>Kernel Exploitation & eBPF Telemetry</li>
+                </ul>
+              </div>
+            </div>
+            <div class="p-4 pt-0 d-flex justify-content-between align-items-center border-top border-gold-subtle mt-auto">
+              <span class="x-small text-muted font-mono">18 WEEKS • 48 MODULES</span>
+              <label for="enroll-modal-toggle" class="card-link-arrow border-0 bg-transparent text-gold cursor-pointer p-0 fw-bold">Enrol Track →</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 7: Quantum Computing & Algorithms -->
+        <div class="col-md-6 col-lg-4 track-card-wrapper" data-category="quantum">
+          <div class="animated-3d-card h-100 d-flex flex-column justify-content-between">
+            <div class="hologram-line"></div>
+            <div>
+              <div class="card-img-overlay-wrap">
+                <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2560&auto=format&fit=crop" alt="Quantum Computing" class="luxury-card-img">
+                <div class="img-gradient-mask"></div>
+                <span class="position-absolute top-0 end-0 m-3 badge bg-dark border border-gold-subtle text-gold font-mono">TRACK 07</span>
+              </div>
+              <div class="p-4">
+                <div class="d-flex gap-2 mb-3 flex-wrap">
+                  <span class="tech-pill">Qiskit</span>
+                  <span class="tech-pill">Cirq</span>
+                  <span class="tech-pill">Q#</span>
+                  <span class="tech-pill">Linear Algebra</span>
+                </div>
+                <h3 class="h4 text-white font-serif mb-2">Quantum Computing & Systems</h3>
+                <p class="text-muted small mb-3">Explore quantum superposition, design fault-tolerant qubit algorithms, and interface with cloud quantum processing units.</p>
+                
+                <ul class="module-list mb-3">
+                  <li>Qubit Circuit Simulation & Optimization</li>
+                  <li>Grover & Shor Algorithmic Implementations</li>
+                  <li>Variational Quantum Eigensolvers (VQE)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="p-4 pt-0 d-flex justify-content-between align-items-center border-top border-gold-subtle mt-auto">
+              <span class="x-small text-muted font-mono">22 WEEKS • 56 MODULES</span>
+              <label for="enroll-modal-toggle" class="card-link-arrow border-0 bg-transparent text-gold cursor-pointer p-0 fw-bold">Enrol Track →</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track 8: Autonomous Robotics & Edge Control -->
+        <div class="col-md-6 col-lg-4 track-card-wrapper" data-category="quantum">
+          <div class="animated-3d-card h-100 d-flex flex-column justify-content-between">
+            <div class="hologram-line"></div>
+            <div>
+              <div class="card-img-overlay-wrap">
+                <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=2560&auto=format&fit=crop" alt="Robotics" class="luxury-card-img">
+                <div class="img-gradient-mask"></div>
+                <span class="position-absolute top-0 end-0 m-3 badge bg-dark border border-gold-subtle text-gold font-mono">TRACK 08</span>
+              </div>
+              <div class="p-4">
+                <div class="d-flex gap-2 mb-3 flex-wrap">
+                  <span class="tech-pill">ROS 2</span>
+                  <span class="tech-pill">C++20</span>
+                  <span class="tech-pill">LiDAR SLAM</span>
+                  <span class="tech-pill">NVIDIA Isaac</span>
+                </div>
+                <h3 class="h4 text-white font-serif mb-2">Robotics & Autonomous Systems</h3>
+                <p class="text-muted small mb-3">Design real-time robotic controllers, sensor fusion networks, LiDAR SLAM mapping, and edge AI navigation engines.</p>
+                
+                <ul class="module-list mb-3">
+                  <li>Real-time Kinematics & Path Planning</li>
+                  <li>LiDAR & Computer Vision Fusion</li>
+                  <li>ROS 2 Embedded Hardware Interfacing</li>
+                </ul>
+              </div>
+            </div>
+            <div class="p-4 pt-0 d-flex justify-content-between align-items-center border-top border-gold-subtle mt-auto">
+              <span class="x-small text-muted font-mono">20 WEEKS • 50 MODULES</span>
+              <label for="enroll-modal-toggle" class="card-link-arrow border-0 bg-transparent text-gold cursor-pointer p-0 fw-bold">Enrol Track →</label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Enrolment Admissions Modal Overlay -->
+  <div class="modal-overlay">
+    <div class="enroll-modal-box">
+      <label for="enroll-modal-toggle" class="css-modal-close-btn">← Back to Curriculum</label>
+      
+      <div class="text-center mb-4">
+        <span class="section-subtitle">COHORT ADMISSIONS</span>
+        <h2 class="text-white font-serif h3">Secure Your Candidacy</h2>
+        <p class="text-muted small">Submit your academic profile for syndicate review.</p>
+      </div>
+
+      <form onsubmit="event.preventDefault(); alert('Candidacy application submitted successfully!'); document.getElementById('enroll-modal-toggle').checked = false;">
+        <div class="mb-3">
+          <label class="form-label text-muted x-small uppercase font-mono">Full Name</label>
+          <input type="text" class="form-control bg-surface-dark border-gold-subtle text-white" placeholder="Evelyn Vance" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label text-muted x-small uppercase font-mono">Email Address</label>
+          <input type="email" class="form-control bg-surface-dark border-gold-subtle text-white" placeholder="evelyn@domain.com" required>
+        </div>
+        <div class="mb-4">
+          <label class="form-label text-muted x-small uppercase font-mono">Target Discipline</label>
+          <select class="form-select bg-surface-dark border-gold-subtle text-white">
+            <option>Full Stack Web Engineering</option>
+            <option>Artificial Intelligence & Neural Core</option>
+            <option>UI/UX & Spatial Systems</option>
+            <option>Spatial Computing & WebXR</option>
+            <option>Predictive Telemetry & Data</option>
+            <option>Cybersecurity & Cryptography</option>
+            <option>Quantum Computing & Systems</option>
+            <option>Robotics & Autonomous Systems</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-luxury-glow w-100 py-3 mb-3">Submit Application</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="luxury-footer pt-5 pb-4 mt-5">
+    <div class="container text-center text-muted small border-top border-gold-subtle pt-4 font-mono">
+      &copy; 2026 LearnSpace Technologies Inc. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript for Dynamic 3D Tilt and Filtering -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Dynamic 3D Mouse Tilt Effect
+      const cards = document.querySelectorAll('.animated-3d-card');
+
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const rotateX = ((y - centerY) / centerY) * -10;
+          const rotateY = ((x - centerX) / centerX) * 10;
+
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+        });
+      });
+
+      // 2. Discipline Filter Logic
+      const filterButtons = document.querySelectorAll('#filter-container .curriculum-filter-btn');
+      const trackCards = document.querySelectorAll('.track-card-wrapper');
+
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const filter = btn.getAttribute('data-filter');
+
+          trackCards.forEach(card => {
+            const category = card.getAttribute('data-category');
+            if (filter === 'all' || category === filter) {
+              card.classList.remove('hidden-card');
+            } else {
+              card.classList.add('hidden-card');
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Member Login — LearnSpace Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="d-flex align-items-center justify-content-center min-vh-100 bg-obsidian position-relative overflow-hidden">
+  <div class="light-beam beam-1"></div>
+  <div class="light-beam beam-2"></div>
+  <div class="perspective-grid-bg"></div>
+
+  <div class="container position-relative z-2 max-w-500">
+    <div class="css-modal-content border-gold-glow">
+      <a href="index.html" class="css-modal-close">← Back to Hub</a>
+      <div class="text-center mb-4">
+        <span class="section-subtitle">SECURE ACCESS</span>
+        <h2 class="text-white font-serif h3">Member Portal</h2>
+        <p class="text-muted small">Enter your cryptographic credentials to access your terminal.</p>
+      </div>
+      <form onsubmit="event.preventDefault(); alert('Authentication simulation successful! Welcome back.'); window.location.href='index.html';">
+        <div class="mb-3">
+          <label class="form-label text-muted x-small uppercase font-mono">Institutional Email</label>
+          <input type="email" class="form-control bg-surface-dark border-gold-subtle text-white" placeholder="scholar@learnspace.io" required>
+        </div>
+        <div class="mb-4">
+          <label class="form-label text-muted x-small uppercase font-mono">Master Passkey</label>
+          <input type="password" class="form-control bg-surface-dark border-gold-subtle text-white" placeholder="••••••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-luxury-glow w-100 py-3 mb-3">Authenticate Session</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

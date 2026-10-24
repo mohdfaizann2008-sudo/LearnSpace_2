@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roadmap — LearnSpace 3D Learning Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    :root {
+      --gold-primary: #d4af37;
+      --gold-glow: rgba(212, 175, 55, 0.4);
+      --bg-dark: #0a0a0c;
+      --surface-card: rgba(18, 18, 24, 0.85);
+      --border-gold: rgba(212, 175, 55, 0.25);
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: #e0e0e0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .font-serif {
+      font-family: 'Cinzel', serif;
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .text-gold {
+      color: var(--gold-primary) !important;
+    }
+
+    .border-gold-subtle {
+      border-color: var(--border-gold) !important;
+    }
+
+    /* Roadmap Timeline Styling */
+    .roadmap-timeline-wrapper {
+      position: relative;
+      padding: 3rem 0;
+    }
+
+    .roadmap-central-axis {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: linear-gradient(180deg, 
+        rgba(212, 175, 55, 0.1) 0%, 
+        var(--gold-primary) 15%, 
+        var(--gold-primary) 85%, 
+        rgba(212, 175, 55, 0.1) 100%);
+      transform: translateX(-50%);
+      box-shadow: 0 0 15px var(--gold-glow);
+      z-index: 1;
+    }
+
+    @media (max-width: 991px) {
+      .roadmap-central-axis {
+        left: 30px;
+      }
+    }
+
+    /* Timeline Nodes */
+    .roadmap-node-glow {
+      width: 24px;
+      height: 24px;
+      background: var(--bg-dark);
+      border: 3px solid var(--gold-primary);
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--gold-primary);
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      transition: all 0.4s ease;
+    }
+
+    .roadmap-milestone:hover .roadmap-node-glow {
+      background: var(--gold-primary);
+      box-shadow: 0 0 30px var(--gold-primary), 0 0 50px rgba(212, 175, 55, 0.6);
+      transform: scale(1.25);
+    }
+
+    /* Milestone Numbers & Typography */
+    .roadmap-num {
+      font-family: 'Cinzel', serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, var(--gold-primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Glassmorphism Panel Cards */
+    .roadmap-panel-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-gold);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .roadmap-milestone:hover .roadmap-panel-card {
+      border-color: rgba(212, 175, 55, 0.7);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 45px rgba(212, 175, 55, 0.2);
+    }
+
+    .card-img-overlay-wrap {
+      position: relative;
+      height: 180px;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+    }
+
+    .luxury-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .roadmap-milestone:hover .luxury-card-img {
+      transform: scale(1.1);
+    }
+
+    .img-gradient-mask {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(10, 10, 12, 0.1) 0%, rgba(18, 18, 24, 0.9) 100%);
+    }
+
+    /* Checklist & Pills */
+    .roadmap-checklist {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 0;
+    }
+
+    .roadmap-checklist li {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.7);
+      position: relative;
+      padding-left: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .roadmap-checklist li::before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      color: var(--gold-primary);
+      font-size: 0.75rem;
+    }
+
+    .tech-pill {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      color: var(--gold-primary);
+      letter-spacing: 0.5px;
+    }
+
+    /* Outcome Callout Box */
+    .outcome-box {
+      background: rgba(212, 175, 55, 0.05);
+      border-left: 3px solid var(--gold-primary);
+      padding: 0.85rem 1rem;
+      border-radius: 0 12px 12px 0;
+      margin-top: 1rem;
+    }
+
+    .outcome-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="luxury-navbar fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a href="index.html" class="brand-logo">Learn<span>Space</span></a>
+      <div class="nav-links d-none d-lg-flex align-items-center gap-4">
+        <a href="index.html" class="nav-link-custom">Home</a>
+        <a href="curriculum.html" class="nav-link-custom">Curriculum</a>
+        <a href="roadmap.html" class="nav-link-custom active">Roadmap</a>
+        <a href="ecosystem.html" class="nav-link-custom">Ecosystem</a>
+        <a href="testimonials.html" class="nav-link-custom">Testimonials</a>
+      </div>
+      <div class="d-none d-lg-flex align-items-center gap-3">
+        <a href="login.html" class="btn btn-luxury-outline">Member Login</a>
+        <a href="enrol.html" class="btn btn-luxury-glow">Enrol Now</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Roadmap Section -->
+  <main class="section-padding bg-surface-dark pt-200 pb-5">
+    <div class="container">
+      <div class="text-center mx-auto mb-5 max-w-700">
+        <span class="section-subtitle font-mono">Architected Journeys</span>
+        <h2 class="section-title">The Accelerated Mastery Roadmap</h2>
+        <p class="section-desc">A structured 6-phase trajectory engineered to elevate ambitious developers into elite tech architects through hands-on simulations, code reviews, and syndicate mentorship.</p>
+      </div>
+
+      <div class="roadmap-timeline-wrapper position-relative">
+        <div class="roadmap-central-axis"></div>
+
+        <!-- PHASE 01: Diagnostic & Foundation -->
+        <div class="roadmap-milestone row align-items-center mb-5">
+          <div class="col-lg-5 text-lg-end pe-lg-5 order-1">
+            <span class="roadmap-num">01</span>
+            <span class="tech-pill font-mono mb-2 d-inline-block">WEEKS 01 - 04</span>
+            <h3 class="text-white h4 font-serif fw-bold mt-1">Diagnostic & Foundation</h3>
+            <p class="text-muted small">Establish fundamental engineering rigor through diagnostic evaluations, mentor alignment, and core architectural principles.</p>
+            <div class="d-flex gap-2 justify-content-lg-end flex-wrap mt-3">
+              <span class="tech-pill">Aptitude Indexing</span>
+              <span class="tech-pill">Git Workflows</span>
+              <span class="tech-pill">System Basics</span>
+            </div>
+          </div>
+          <div class="col-lg-2 text-center my-3 my-lg-0 order-2">
+            <div class="roadmap-node-glow"></div>
+          </div>
+          <div class="col-lg-5 ps-lg-5 order-3">
+            <div class="roadmap-panel-card position-relative overflow-hidden">
+              <div class="card-img-overlay-wrap">
+                <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1000&auto=format&fit=crop" alt="Phase 1" class="luxury-card-img">
+                <div class="img-gradient-mask"></div>
+              </div>
+              <div class="position-relative z-2">
+                <span class="text-gold font-mono x-small uppercase d-block mb-1">PHASE 01 // DIAGNOSTIC EVALUATION</span>
+                <p class="text-white mb-3 small">Personalized skill matrix indexing to match you with an executive mentor.</p>
+                <ul class="roadmap-checklist">
+                  <li>Baseline technical competency audit</li>
+                  <li>Custom learning track trajectory mapping</li>
+                  <li>IDE setup & enterprise repository configuration</li>
+                </ul>
+                <div class="outcome-box">
+                  <div class="outcome-title font-mono">Milestone Deliverable</div>
+                  <div class="text-muted small">Personalized Executive Roadmap & Skill Scorecard</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE 02: Deep Architecture & Microservices -->
+        <div class="roadmap-milestone row align-items-center mb-5">
+          <div class="col-lg-5 ps-lg-5 order-lg-3 order-1">
+            <span class="roadmap-num">02</span>
+            <span class="tech-pill font-mono mb-2 d-inline-block">WEEKS 05 - 10</span>
+            <h3 class="text-white h4 font-serif fw-bold mt-1">Architecture & Microservices</h3>
+            <p class="text-muted small">Construct highly concurrent, distributed microservice architectures designed for ultra-low latency and horizontal scale.</p>
+            <div class="d-flex gap-2 flex-wrap mt-3">
+              <span class="tech-pill">Kubernetes</span>
+              <span class="tech-pill">Docker</span>
+              <span class="tech-pill">gRPC</span>
+              <span class="tech-pill">Redis</span>
+            </div>
+          </div>
+          <div class="col-lg-2 text-center my-3 my-lg-0 order-2">
+            <div class="roadmap-node-glow"></div>
+          </div>
+          <div class="col-lg-5 text-lg-end pe-lg-5 order-lg-1 order-3">
+            <div class="roadmap-panel-card position-relative overflow-hidden">
+              <div class="card-img-overlay-wrap">
+                <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1000&auto=format&fit=crop" alt="Phase 2" class="luxury-card-img">
+                <div class="img-gradient-mask"></div>
+              </div>
+              <div class="position-relative z-2">
+                <span class="text-gold font-mono x-small uppercase d-block mb-1">PHASE 02 // DISTRIBUTED INFRASTRUCTURE</span>
+                <p class="text-white mb-3 small">Build resilient cloud networks engineered to sustain peak enterprise traffic spikes.</p>
+                <ul class="roadmap-checklist text-start">
+                  <li>Container orchestration with Kubernetes clusters</li>
+                  <li>Event-driven architecture with Apache Kafka</li>
+                  <li>Zero-downtime deployment pipelines</li>
+                </ul>
+                <div class="outcome-box text-start">
+                  <div class="outcome-title font-mono">Milestone Deliverable</div>
+                  <div class="text-muted small">Production-Ready Multi-Region Microservice Cluster</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE 03: Neural AI Integration -->
+        <div class="roadmap-milestone row align-items-center mb-5">
+          <div class="col-lg-5 text-lg-end pe-lg-5 order-1">
+            <span class="roadmap-num">03</span>
+            <span class="tech-pill font-mono mb-2 d-inline-block">WEEKS 11 - 16</span>
+            <h3 class="text-white h4 font-serif fw-bold mt-1">Neural AI & Tensor Core</h3>
+            <p class="text-muted small">Integrate state-of-the-art LLMs, vector search databases, and autonomous multi-agent frameworks into production applications.</p>
+            <div class="d-flex gap-2 justify-content-lg-end flex-wrap mt-3">
+              <span class="tech-pill">PyTorch</span>
+              <span class="tech-pill">LangChain</span>
+              <span class="tech-pill">Pinecone</span>
+              <span class="tech-pill">CUDA</span>
+            </div>
+          </div>
+          <div class="col-lg-2 text-center my-3 my-lg-0 order-2">
+            <div class="roadmap-node-glow"></div>
+          </div>
+          <div class="col-lg-5 ps-lg-5 order-3">
+            <div class="roadmap-panel-card position-relative overflow-hidden">
+              <div class="card-img-overlay-wrap">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop" alt="Phase 3" class="luxury-card-img">
+                <div class="img-gradient-mask"></div>
+              </div>
+              <div class="position-relative z-2">
+                <span class="text-gold font-mono x-small uppercase d-block mb-1">PHASE 03 // INTELLIGENT SYSTEMS</span>
+                <p class="text-white mb-3 small">Engineer self-improving cognitive AI layers into existing software platforms.</p>
+                <ul class="roadmap-checklist">
+                  <li>Retrieval-Augmented Generation (RAG) pipelines</li>
+                  <li>Model fine-tuning & quantization techniques</li>
+                  <li>Real-time vector similarity indexing</li>
+                </ul>
+                <div class="outcome-box">
+                  <div class="outcome-title font-mono">Milestone Deliverable</div>
+                  <div class="text-muted small">Autonomous Domain-Specific AI Copilot</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE 04: Spatial Computing & WebXR -->
+        <div class="roadmap-milestone row align-items-center mb-5">
+          <div class="col-lg-5 ps-lg-5 order-lg-3 order-1">
+            <span class="roadmap-num">04</span>
+            <span class="tech-pill font-mono mb-2 d-inline-block">WEEKS 17 - 20</span>
+            <h3 class="text-white h4 font-serif fw-bold mt-1">Spatial Computing & 3D Web</h3>
+            <p class="text-muted small">Unlock volumetric 3D user experiences using WebGPU shaders, Three.js scenes, and real-time WebXR spatial anchors.</p>
+            <div class="d-flex gap-2 flex-wrap mt-3">
+              <span class="tech-pill">Three.js</span>
+              <span class="tech-pill">WebGPU</span>
+              <span class="tech-pill">GLSL Shaders</span>
+              <span class="tech-pill">Spatial Audio</span>
+            </div>
+          </div>
+          <div class="col-lg-2 text-center my-3 my-lg-0 order-2">
+            <div class="roadmap-node-glow"></div>
+          </div>
+          <div class="col-lg-5 text-lg-end pe-lg-5 order-lg-1 order-3">
+            <div class="roadmap-panel-card position-relative overflow-hidden">
+              <div class="card-img-overlay-wrap">
+                <img src="https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?q=80&w=1000&auto=format&fit=crop" alt="Phase 4" class="luxury-card-img">
+                <div class="img-gradient-mask"></div>
+              </div>
+              <div class="position-relative z-2">
+                <span class="text-gold font-mono x-small uppercase d-block mb-1">PHASE 04 // VOLUMETRIC INTERACTION</span>
+                <p class="text-white mb-3 small">Transition standard flat UI into immersive 3D spatial environments.</p>
+                <ul class="roadmap-checklist text-start">
+                  <li>Custom GLSL shader programming & GPU rendering</li>
+                  <li>Immersive WebXR navigation & gesture controls</li>
+                  <li>Volumetric lighting and physics simulation</li>
+                </ul>
+                <div class="outcome-box text-start">
+                  <div class="outcome-title font-mono">Milestone Deliverable</div>
+                  <div class="text-muted small">Interactive WebGPU 3D Analytics Hub</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE 05: Cybersecurity & Zero Trust -->
+        <div class="roadmap-milestone row align-items-center mb-5">
+          <div class="col-lg-5 text-lg-end pe-lg-5 order-1">
+            <span class="roadmap-num">05</span>
+            <span class="tech-pill font-mono mb-2 d-inline-block">WEEKS 21 - 24</span>
+            <h3 class="text-white h4 font-serif fw-bold mt-1">Zero-Trust Hardening & Cryptography</h3>
+            <p class="text-muted small">Protect applications against high-level exploits using post-quantum encryption standards, Rust kernel drivers, and zero-trust mesh architectures.</p>
+            <div class="d-flex gap-2 justify-content-lg-end flex-wrap mt-3">
+              <span class="tech-pill">Zero Trust</span>
+              <span class="tech-pill">Rust</span>
+              <span class="tech-pill">Post-Quantum</span>
+              <span class="tech-pill">mTLS</span>
+            </div>
+          </div>
+          <div class="col-lg-2 text-center my-3 my-lg-0 order-2">
+            <div class="roadmap-node-glow"></div>
+          </div>
+          <div class="col-lg-5 ps-lg-5 order-3">
+            <div class="roadmap-panel-card position-relative overflow-hidden">
+              <div class="card-img-overlay-wrap">
+                <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=1000&auto=format&fit=crop" alt="Phase 5" class="luxury-card-img">
+                <div class="img-gradient-mask"></div>
+              </div>
+              <div class="position-relative z-2">
+                <span class="text-gold font-mono x-small uppercase d-block mb-1">PHASE 05 // SYSTEM HARDENING</span>
+                <p class="text-white mb-3 small">Conduct penetration defense drills and implement cryptographically verified authentication.</p>
+                <ul class="roadmap-checklist">
+                  <li>Lattice-based post-quantum key exchange</li>
+                  <li>Automated vulnerability penetration testing</li>
+                  <li>eBPF kernel-level security telemetry</li>
+                </ul>
+                <div class="outcome-box">
+                  <div class="outcome-title font-mono">Milestone Deliverable</div>
+                  <div class="text-muted small">Audited Zero-Trust Security Infrastructure</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE 06: Capstone & Syndicate Placement -->
+        <div class="roadmap-milestone row align-items-center mb-5">
+          <div class="col-lg-5 ps-lg-5 order-lg-3 order-1">
+            <span class="roadmap-num">06</span>
+            <span class="tech-pill font-mono mb-2 d-inline-block">WEEKS 25 - 28</span>
+            <h3 class="text-white h4 font-serif fw-bold mt-1">Capstone & Executive Syndicate</h3>
+            <p class="text-muted small">Synthesize all learnings into an enterprise capstone project presented directly to industry leaders, principal architects, and venture partners.</p>
+            <div class="d-flex gap-2 flex-wrap mt-3">
+              <span class="tech-pill">Capstone Review</span>
+              <span class="tech-pill">Mentorship</span>
+              <span class="tech-pill">Syndicate Hiring</span>
+            </div>
+          </div>
+          <div class="col-lg-2 text-center my-3 my-lg-0 order-2">
+            <div class="roadmap-node-glow"></div>
+          </div>
+          <div class="col-lg-5 text-lg-end pe-lg-5 order-lg-1 order-3">
+            <div class="roadmap-panel-card position-relative overflow-hidden">
+              <div class="card-img-overlay-wrap">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000&auto=format&fit=crop" alt="Phase 6" class="luxury-card-img">
+                <div class="img-gradient-mask"></div>
+              </div>
+              <div class="position-relative z-2">
+                <span class="text-gold font-mono x-small uppercase d-block mb-1">PHASE 06 // SYNDICATE DEFENSE</span>
+                <p class="text-white mb-3 small">Defend your architectural capstone in front of our executive hiring syndicate.</p>
+                <ul class="roadmap-checklist text-start">
+                  <li>Live system load testing & architecture defense</li>
+                  <li>Direct placement referrals with partner labs</li>
+                  <li>Lifetime access to alumni research network</li>
+                </ul>
+                <div class="outcome-box text-start">
+                  <div class="outcome-title font-mono">Milestone Deliverable</div>
+                  <div class="text-muted small">LearnSpace Senior Fellow Certification & Placement</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Call to Action Banner -->
+      <div class="text-center mt-5 pt-4">
+        <div class="p-5 border border-gold-subtle rounded-4 bg-surface-dark position-relative overflow-hidden">
+          <h3 class="text-white font-serif h3 mb-3">Ready to Begin Your Journey?</h3>
+          <p class="text-muted max-w-700 mx-auto small mb-4">Admissions are processed on a rolling basis for our next executive cohort.</p>
+          <a href="enrol.html" class="btn btn-luxury-glow px-4 py-3">Secure Your Candidacy →</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="luxury-footer pt-5 pb-4 mt-5">
+    <div class="container text-center text-muted small border-top border-gold-subtle pt-4 font-mono">
+      &copy; 2026 LearnSpace Technologies Inc. All rights reserved.
+    </div>
+  </footer>
+</body>
+</html>
